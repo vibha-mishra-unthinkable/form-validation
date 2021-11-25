@@ -1,0 +1,59 @@
+@mixin buttonStyle($bgColor) {
+  color: white;
+  width: 10%;
+  border: none;
+  cursor: pointer;
+  background-color: $bgColor;
+  padding: 0.5rem;
+  border-radius: 1.2rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  &:hover {
+    box-shadow: 6px -6px 19px -3px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 6px -6px 19px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 6px -6px 19px -3px rgba(0, 0, 0, 0.75);
+  }
+}
+
+.create {
+  @include buttonStyle(green);
+}
+.reset {
+  @include buttonStyle(red);
+}
+.formWrapper {
+  text-align: center;
+  background-color: beige;
+  align-items: center;
+}
+h2 {
+  font-size: 3rem;
+}
+.inputLabel {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  flex-direction: column;
+  margin-right: 0.5rem;
+}
+.inputText {
+  width: 23%;
+  padding: 0.3rem;
+  font-size: 1rem;
+}
+.inputs {
+  margin-bottom: 1rem;
+}
+
+@mixin statusText($clr) {
+  color: $clr;
+}
+.statusSuccess {
+  @include statusText(green);
+}
+.statusFailed {
+  @include statusText(red);
+}
+.error {
+  color: red;
+}
