@@ -1,10 +1,9 @@
 import React from "react";
 import Form from "./Form";
 import FormStatus from "./FormStatus";
+import Helper from "./Helper";
 
-const validEmailRegex = RegExp(
-  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
-);
+//function for validating input fields on the basis of error values.
 const validateForm = (errors) => {
   let valid = true;
   Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
@@ -12,6 +11,7 @@ const validateForm = (errors) => {
 };
 
 export default class App extends React.Component {
+  //initalizing state
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +27,7 @@ export default class App extends React.Component {
     };
   }
 
+  //function for handling change in input fields and updating error state if any error exists.
   handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -39,7 +40,7 @@ export default class App extends React.Component {
             : "";
         break;
       case "email":
-        errors.email = validEmailRegex.test(value) ? "" : "Email is not valid!";
+        errors.email = Helper().test(value) ? "" : "Email is not valid!";
         break;
       case "password":
         errors.password =
@@ -53,6 +54,7 @@ export default class App extends React.Component {
 
     this.setState({ errors, [name]: value });
   };
+  //function to reset the state
   resetHandler = () => {
     this.setState({
       fullName: "",
@@ -67,15 +69,12 @@ export default class App extends React.Component {
     });
   };
 
+  //function that updates the status on form submit after validating input fields.
   handleSubmit = (event) => {
     event.preventDefault();
-    if (
-      this.state.fullName === "" ||
-      this.state.email === "" ||
-      this.state.password === ""
-    ) {
-      alert("Invalid Input");
-      console.log(this.state.status);
+    const { fullName, email, password } = this.state;
+    if (fullName === "" || email === "" || password === "") {
+      this.setState({ status: "Failed" });
     } else if (validateForm(this.state.errors)) {
       this.setState({ status: "Success" });
     } else {
